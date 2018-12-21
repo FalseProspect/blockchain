@@ -25,6 +25,16 @@ describe('Transaction', ()=>{
     expect(transaction.input.amount).toEqual(wallet.balance);
   });
 
+  it('Validates a valid transaction', ()=>{
+    expect(Transaction.verfiyTransaction(transaction)).toBe(true);
+  });
+
+  it('Invalidates a corrupt tranaction', ()=> {
+    transaction.outputs[0].amount = 50000;
+    expect(Transaction.verfiyTransaction(transaction)).toBe(false);
+  })
+
+  //Overdrawing
   describe('Transaction exceeds the sender wallet balance',()=>{
     beforeEach(() => {
       amount = 50000;
